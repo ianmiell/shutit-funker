@@ -5,7 +5,8 @@ class shutit_funker(ShutItModule):
 	def build(self, shutit):
 		shutit.login('vagrant ssh swarm1')
 		shutit.login('sudo su -')
-		shutit send('mkdir -p funker_example')
+		shutit.send('docker-machine ls',note='Docker swarm pre-set up')
+		shutit.send('mkdir -p funker_example')
 		shutit.send('cd funker_example')
 		shutit.send_file('handler.js','''
 var funker = require('funker');
@@ -40,5 +41,5 @@ def module():
 			description='',
 			maintainer='',
 			delivery_methods=['bash'],
-			depends=['shutit.tk.swarm.swarm']
+			depends=['tk.shutit.swarm.swarm']
 		)
