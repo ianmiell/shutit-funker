@@ -1,14 +1,14 @@
-= ShutIt-Funker
+# ShutIt-Funker
 
-== Intro
+## Intro
 
 A walkthrough of bfirsh's [funker](https://github.com/bfirsh/funker) serverless Docker concept.
 
-== Walkthrough
+## Walkthrough
 
 This video begins after a [swarm has been set up](https://github.com/ianmiell/shutit-library/tree/master/swarm), and walks through the steps taken to run.
 
-== Run
+## Run
 
 ```sh
 sudo pip install shutit

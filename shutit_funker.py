@@ -4,7 +4,6 @@ class shutit_funker(ShutItModule):
 
 	def build(self, shutit):
 		shutit.send('cd ' + shutit.cfg['tk.shutit.swarm.swarm']['vagrant_run_dir'])
-		shutit.pause_point('vagrant ssh swarm1')
 		shutit.login('vagrant ssh swarm1')
 		shutit.login('sudo su -')
 		shutit.begin_asciinema_session(title='Funker demo')
