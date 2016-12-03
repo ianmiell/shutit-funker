@@ -6,8 +6,8 @@ class shutit_funker(ShutItModule):
 		shutit.send('cd ' + shutit.cfg['tk.shutit.swarm.swarm']['vagrant_run_dir'])
 		shutit.login('vagrant ssh swarm1')
 		shutit.login('sudo su -')
-		shutit.begin_asciinema_session(title='Funker demo')
-		shutit.send('docker-machine ls',note='Docker swarm pre-set up')
+		#shutit.begin_asciinema_session(title='Funker demo')
+		shutit.send('eval $(docker-machine env swarm1)',note='Docker swarm pre-set up')
 		shutit.send('mkdir -p funker_example')
 		shutit.send('cd funker_example')
 		shutit.send_file('handler.js','''
@@ -34,7 +34,7 @@ funker.handler(function(args, callback) {
 		shutit.send('import funker',expect='>>>',note='Import the funker package')
 		shutit.send('funker.call("funker-add", x=1, y=2)',expect='>>>',note='Call the funker function with two args.')
 		shutit.send('exit()')
-		shutit.end_asciinema_session(title='Funker demo')
+		#shutit.end_asciinema_session(title='Funker demo')
 		shutit.pause_point('')
 		return True
 
