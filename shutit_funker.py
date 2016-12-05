@@ -7,7 +7,7 @@ class shutit_funker(ShutItModule):
 		shutit.login('vagrant ssh swarm1')
 		shutit.login('sudo su -')
 		#shutit.begin_asciinema_session(title='Funker demo')
-		shutit.send('eval $(docker-machine env swarm1)',note='Docker swarm pre-set up')
+		shutit.send('eval $(docker-machine env swarm1)',note='Get on the leader')
 		shutit.send('mkdir -p funker_example')
 		shutit.send('cd funker_example')
 		shutit.send_file('handler.js','''
@@ -27,14 +27,15 @@ funker.handler(function(args, callback) {
   }
 }''',note='Create the file that allows us to package up the node app.')
 		shutit.send_file('Dockerfile','''FROM node:7-onbuild''')
-		shutit.send('docker build -t funker-add .',note='Build the docker image that runs the function, and call it "funker-add"')
+		shutit.send('docker build -t add .',note='Build the docker image that runs the function, and call it "add"')
 		shutit.send('docker network create --attachable -d overlay funker',note='Create the "funker" network')
-		shutit.send('docker service create --name funker-add --network funker funker-add',note='Create the funker-add service, which runs in the funker network.')
-		shutit.send('docker run -it --net funker funker/python',expect='>>>',note='Run up a python funker client')
+		shutit.send('docker service create --name add --network funker add',note='Create the add service, which runs in the funker network.')
+		shutit.pause_point('docker run -it --net funker funker/python')
+		#shutit.send('docker run -it --net funker funker/python',expect='>>>',note='Run up a python funker client')
 		shutit.send('import funker',expect='>>>',note='Import the funker package')
-		shutit.send('funker.call("funker-add", x=1, y=2)',expect='>>>',note='Call the funker function with two args.')
+		shutit.send('funker.call("add", x=1, y=2)',expect='>>>',note='Call the funker function with two args.')
 		shutit.send('exit()')
-		#shutit.end_asciinema_session(title='Funker demo')
+		#shutit.end_asciinema_session()
 		shutit.pause_point('')
 		return True
 
